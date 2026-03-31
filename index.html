@@ -102,21 +102,23 @@
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      padding: 8px 20px 16px;
+      padding: 8px 0 16px;
+      justify-content: center;
     }
     .slider::-webkit-scrollbar { display: none; }
     .slider img {
-      width: 160px;
+      width: 140px;
       flex-shrink: 0;
       scroll-snap-align: center;
       border-radius: 20px;
       box-shadow: 0 16px 48px rgba(0,0,0,0.5);
       border: 1px solid rgba(255,255,255,0.1);
     }
-    .slider-hint {
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      margin-top: 4px;
+    @media (max-width: 600px) {
+      .slider {
+        justify-content: flex-start;
+        padding: 8px 24px 16px;
+      }
     }
 
     .hero-cta {
@@ -180,16 +182,17 @@
     }
 
     /* ===== PRICING ===== */
-    .pricing { background: var(--dark); }
-    .pricing .section-label { color: var(--blue-light); }
-    .pricing .section-title { color: #fff; }
+    .pricing { background: #E8F4FD; }
+    .pricing .section-label { color: var(--blue); }
+    .pricing .section-title { color: var(--dark); }
     .price-card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: #fff;
+      border: 1.5px solid rgba(0,113,188,0.2);
       border-radius: 24px;
       overflow: hidden;
       max-width: 360px;
       margin: 0 auto;
+      box-shadow: 0 8px 32px rgba(0,113,188,0.12);
     }
     .price-card-top {
       background: var(--blue);
@@ -217,9 +220,9 @@
     .price-features { list-style: none; }
     .price-features li {
       font-size: 14px;
-      color: rgba(255,255,255,0.8);
+      color: #444;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid #eef3f8;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -332,15 +335,40 @@
     .footer-links { margin-bottom: 14px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
     footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
     footer a:hover { color: rgba(255,255,255,0.7); }
-    .footer-company { margin-bottom: 8px; color: rgba(255,255,255,0.55); }
+    .footer-company { margin-bottom: 6px; color: rgba(255,255,255,0.55); }
+    .footer-email { margin-bottom: 10px; font-size: 11px; }
     .copyright { font-size: 11px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 768px) {
+      .hero { padding: 80px 48px 80px; }
+      .hero h1 { font-size: 44px; }
+      .hero-sub { font-size: 16px; }
+      section { padding: 96px 48px; }
+      .feature-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 48px;
+        max-width: 800px;
+      }
+      .price-card { max-width: 400px; }
+      .store-buttons { flex-direction: row; justify-content: center; }
+    }
+    @media (min-width: 1024px) {
+      header { padding: 16px 64px; }
+      .hero { padding: 100px 64px; }
+      .hero h1 { font-size: 52px; }
+      section { padding: 112px 64px; }
+      .feature-list { max-width: 900px; gap: 36px 64px; }
+      .faq-list { max-width: 680px; }
+    }
   </style>
 </head>
 <body>
 
   <header>
     <img src="images/icon.jpg" alt="カーゴレポート">
-    <span class="app-name">CargoReport</span>
+    <span class="app-name">カーゴレポート</span>
   </header>
 
   <section class="hero">
@@ -358,7 +386,6 @@
         <img src="images/IMG_4.png" alt="画面4">
         <img src="images/IMG_5.png" alt="画面5">
       </div>
-      <p class="slider-hint">← スワイプして確認 →</p>
     </div>
     <div class="hero-cta">App Store・Google Play 近日公開</div>
   </section>
@@ -442,10 +469,6 @@
         <p class="faq-answer">iOS（iPhone）およびAndroid（スマートフォン・タブレット）に対応しています。</p>
       </details>
       <details>
-        <summary>記録したデータは誰でも見られますか？</summary>
-        <p class="faq-answer">いいえ。ご本人のアカウントでのみアクセスできます。所属する運送会社への自動共有などは一切行いません。PDFで手動共有する場合のみ、データが外部に渡ります。</p>
-      </details>
-      <details>
         <summary>PDFで共有するには？</summary>
         <p class="faq-answer">カレンダー画面で日付を長押しすると、PDF出力するセクションを選択できます。出力したいセクションにチェックを入れて「出力する」をタップすると、メールやAirDropなどで送れます。</p>
       </details>
@@ -483,6 +506,7 @@
       <a href="https://kajimakikaku.github.io/cargo-report-legal/privacy.html">プライバシーポリシー</a>
     </div>
     <div class="footer-company">運営：カジマ企画合同会社</div>
+    <div class="footer-email"><a href="mailto:kajimakikaku.contact@gmail.com">kajimakikaku.contact@gmail.com</a></div>
     <div class="copyright">© 2026 カジマ企画合同会社</div>
   </footer>
 
