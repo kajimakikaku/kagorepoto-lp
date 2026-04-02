@@ -62,15 +62,15 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import {
       getAuth,
-      applyActionCode,
-      checkActionCode
+      applyActionCode
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
-    const app = initializeApp({
-      apiKey: 'AIzaSyAFw1eUwXp5eZyGj-H3rPnNdx-DUOxD2Mk',
-      authDomain: 'kagorepoto-app-97f74.firebaseapp.com',
-      projectId: 'kagorepoto-app-97f74',
-    });
+    (async () => {
+
+    // Firebase config を Firebase サーバーから取得（API キーをソースに含めない）
+    const configRes = await fetch('https://kagorepoto-app-97f74.firebaseapp.com/__/firebase/init.json');
+    const firebaseConfig = await configRes.json();
+    const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
     function show(icon, title, message, showButton) {
@@ -118,6 +118,7 @@
     } else {
       showError('不明な操作です。');
     }
+    })();
   </script>
 </body>
 </html>
