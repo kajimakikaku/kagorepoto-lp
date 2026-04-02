@@ -65,65 +65,53 @@
       applyActionCode
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
-    (async () => {
-    try {
-
-    // Firebase config を Firebase サーバーから取得（API キーをソースに含めない）
-    const configRes = await fetch('https://kagorepoto-app-97f74.firebaseapp.com/__/firebase/init.json');
-    if (!configRes.ok) throw new Error('config fetch failed: ' + configRes.status);
-    const firebaseConfig = await configRes.json();
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    function show(icon, title, message, showButton) {
+    // show/showError は try-catch の外で定義（スコープエラー防止）
+    const show = (icon, title, message) => {
       document.getElementById('content').innerHTML = `
         <div class="icon">${icon}</div>
         <h1>${title}</h1>
         <p>${message}</p>
-        ${showButton ? '<a class="btn" href="https://cargo-report.com">トップページへ</a>' : ''}
       `;
-    }
+    };
 
-    function showError(message) {
+    const showError = (message) => {
       document.getElementById('content').innerHTML = `
-        <div class="icon">❌</div>
+        <div class="icon">&#10060;</div>
         <h1 class="error">エラーが発生しました</h1>
         <p class="error">${message}</p>
         <a class="btn" href="https://cargo-report.com">トップページへ</a>
       `;
-    }
+    };
 
-    const params = new URLSearchParams(window.location.search);
-    const mode = params.get('mode');
-    const oobCode = params.get('oobCode');
+    (async () => {
+      try {
+        const configRes = await fetch('https://kagorepoto-app-97f74.firebaseapp.com/__/firebase/init.json');
+        if (!configRes.ok) throw new Error('設定の取得に失敗しました');
+        const firebaseConfig = await configRes.json();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-    if (!oobCode) {
-      showError('無効なリンクです。再度メールをご確認ください。');
-    } else if (mode === 'verifyEmail') {
-      applyActionCode(auth, oobCode)
-        .then(() => {
-          show('✅', 'メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。', false);
-        })
-        .catch(() => {
-          showError('このリンクは無効か、すでに使用済みです。\n再度アプリから認証メールを送信してください。');
-        });
-    } else if (mode === 'verifyAndChangeEmail') {
-      applyActionCode(auth, oobCode)
-        .then(() => {
-          show('✅', 'メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。', false);
-        })
-        .catch(() => {
-          showError('このリンクは無効か、すでに使用済みです。\n再度アプリからメールアドレス変更を行ってください。');
-        });
-    } else if (mode === 'resetPassword') {
-      show('🔑', 'パスワードのリセット', 'このリンクはアプリ内でのみ処理できます。\nアプリを開いてパスワードをリセットしてください。', false);
-    } else {
-      showError('不明な操作です。');
-    }
+        const params = new URLSearchParams(window.location.search);
+        const mode = params.get('mode');
+        const oobCode = params.get('oobCode');
 
-    } catch (e) {
-      showError('処理中にエラーが発生しました。もう一度お試しください。<br><small style="color:#999">' + e.message + '</small>');
-    }
+        if (!oobCode) {
+          showError('無効なリンクです。再度メールをご確認ください。');
+        } else if (mode === 'verifyEmail') {
+          await applyActionCode(auth, oobCode);
+          show('&#9989;', 'メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。');
+        } else if (mode === 'verifyAndChangeEmail') {
+          await applyActionCode(auth, oobCode);
+          show('&#9989;', 'メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。');
+        } else if (mode === 'resetPassword') {
+          show('&#128273;', 'パスワードのリセット', 'アプリを開いてパスワードをリセットしてください。');
+        } else {
+          showError('不明な操作です。');
+        }
+      } catch (e) {
+        showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。');
+        console.error(e);
+      }
     })();
   </script>
 </body>
