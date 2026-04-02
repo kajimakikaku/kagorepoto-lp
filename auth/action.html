@@ -84,9 +84,14 @@
 
     (async () => {
       try {
-        const configRes = await fetch('https://kagorepoto-app-97f74.firebaseapp.com/__/firebase/init.json');
-        if (!configRes.ok) throw new Error('設定の取得に失敗しました');
-        const firebaseConfig = await configRes.json();
+        const firebaseConfig = {
+          apiKey: "AIzaSyA9ZrEeu8xoA_Ps1sruB9NJD89EVJCGUk0",
+          authDomain: "kagorepoto-app-97f74.firebaseapp.com",
+          projectId: "kagorepoto-app-97f74",
+          storageBucket: "kagorepoto-app-97f74.firebasestorage.app",
+          messagingSenderId: "838608449142",
+          appId: "1:838608449142:android:b1fd215be2c979a87cf957"
+        };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
