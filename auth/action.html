@@ -24,7 +24,7 @@
     .subtitle { font-size: 13px; color: #888; margin-bottom: 40px; }
     .icon { font-size: 64px; margin-bottom: 24px; }
     h1 { font-size: 20px; font-weight: bold; margin-bottom: 12px; color: #1a1a1a; }
-    p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 32px; }
+    p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 24px; }
     .spinner {
       width: 48px; height: 48px;
       border: 4px solid #e0e0e0;
@@ -34,7 +34,6 @@
       margin: 0 auto 24px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .error { color: #1a1a1a; }
     .btn {
       display: inline-block;
       background: #0071BC;
@@ -45,7 +44,19 @@
       border-radius: 10px;
       text-decoration: none;
       margin-top: 8px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
     }
+    .btn:disabled { background: #aaa; cursor: not-allowed; }
+    .input-wrap { text-align: left; margin-bottom: 16px; }
+    .input-wrap label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #1a1a1a; }
+    .input-wrap input {
+      width: 100%; padding: 12px; font-size: 15px;
+      border: 1px solid #ccc; border-radius: 8px; outline: none;
+    }
+    .input-wrap input:focus { border-color: #0071BC; }
+    .err-msg { color: #d32f2f; font-size: 13px; margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -62,24 +73,71 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import {
       getAuth,
-      applyActionCode
+      applyActionCode,
+      confirmPasswordReset
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
-    // show/showError は try-catch の外で定義（スコープエラー防止）
-    const show = (icon, title, message) => {
+    const showSuccess = (title, message) => {
       document.getElementById('content').innerHTML = `
-        <div class="icon">${icon}</div>
+        <div class="icon">&#9989;</div>
         <h1>${title}</h1>
         <p>${message}</p>
+        <a class="btn" href="kagorepoto://">アプリに戻る</a>
       `;
     };
 
     const showError = (message) => {
       document.getElementById('content').innerHTML = `
-        <h1 class="error">エラーが発生しました</h1>
-        <p class="error">${message}</p>
+        <h1>エラーが発生しました</h1>
+        <p>${message}</p>
         <a class="btn" href="kagorepoto://">アプリに戻る</a>
       `;
+    };
+
+    const showPasswordForm = (auth, oobCode) => {
+      document.getElementById('content').innerHTML = `
+        <div class="icon">&#128273;</div>
+        <h1>新しいパスワードを設定</h1>
+        <div class="input-wrap">
+          <label>新しいパスワード</label>
+          <input type="password" id="pw1" placeholder="8文字以上">
+        </div>
+        <div class="input-wrap">
+          <label>新しいパスワード（確認）</label>
+          <input type="password" id="pw2" placeholder="もう一度入力">
+        </div>
+        <div class="err-msg" id="pw-err"></div>
+        <button class="btn" id="submit-btn">パスワードを変更する</button>
+      `;
+
+      document.getElementById('submit-btn').addEventListener('click', async () => {
+        const pw1 = document.getElementById('pw1').value;
+        const pw2 = document.getElementById('pw2').value;
+        const errEl = document.getElementById('pw-err');
+        const btn = document.getElementById('submit-btn');
+
+        if (pw1.length < 8) {
+          errEl.textContent = 'パスワードは8文字以上で入力してください';
+          return;
+        }
+        if (pw1 !== pw2) {
+          errEl.textContent = 'パスワードが一致しません';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = '変更中...';
+        errEl.textContent = '';
+
+        try {
+          await confirmPasswordReset(auth, oobCode, pw1);
+          showSuccess('パスワードの変更が完了しました', 'アプリに戻って新しいパスワードでログインしてください。');
+        } catch (e) {
+          btn.disabled = false;
+          btn.textContent = 'パスワードを変更する';
+          errEl.textContent = 'エラーが発生しました。リンクが無効または期限切れの可能性があります。';
+        }
+      });
     };
 
     (async () => {
@@ -103,17 +161,17 @@
           showError('無効なリンクです。再度メールをご確認ください。');
         } else if (mode === 'verifyEmail') {
           await applyActionCode(auth, oobCode);
-          show('&#9989;', 'メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。');
+          showSuccess('メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。');
         } else if (mode === 'verifyAndChangeEmail') {
           await applyActionCode(auth, oobCode);
-          show('&#9989;', 'メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。');
+          showSuccess('メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。');
         } else if (mode === 'resetPassword') {
-          show('&#128273;', 'パスワードのリセット', 'アプリを開いてパスワードをリセットしてください。');
+          showPasswordForm(auth, oobCode);
         } else {
           showError('不明な操作です。');
         }
       } catch (e) {
-        showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。<br><small style="color:#999;font-size:11px;">' + (e.code || e.message || e) + '</small>');
+        showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。');
         console.error(e);
       }
     })();
