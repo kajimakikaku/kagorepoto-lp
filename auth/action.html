@@ -34,7 +34,7 @@
       margin: 0 auto 24px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .error { color: #d32f2f; }
+    .error { color: #1a1a1a; }
     .btn {
       display: inline-block;
       background: #0071BC;
@@ -76,10 +76,9 @@
 
     const showError = (message) => {
       document.getElementById('content').innerHTML = `
-        <div class="icon">&#10060;</div>
         <h1 class="error">エラーが発生しました</h1>
         <p class="error">${message}</p>
-        <a class="btn" href="https://cargo-report.com">トップページへ</a>
+        <a class="btn" href="https://cargo-report.com">アプリに戻る</a>
       `;
     };
 
