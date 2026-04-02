@@ -108,7 +108,7 @@
           showError('不明な操作です。');
         }
       } catch (e) {
-        showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。');
+        showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。<br><small style="color:#999;font-size:11px;">' + (e.code || e.message || e) + '</small>');
         console.error(e);
       }
     })();
