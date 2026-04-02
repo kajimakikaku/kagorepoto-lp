@@ -79,7 +79,6 @@
 
     const showSuccess = (title, message) => {
       document.getElementById('content').innerHTML = `
-        <div class="icon">&#9989;</div>
         <h1>${title}</h1>
         <p>${message}</p>
         <a class="btn" href="kagorepoto://">アプリに戻る</a>
@@ -96,7 +95,6 @@
 
     const showPasswordForm = (auth, oobCode) => {
       document.getElementById('content').innerHTML = `
-        <div class="icon">&#128273;</div>
         <h1>新しいパスワードを設定</h1>
         <div class="input-wrap">
           <label>新しいパスワード</label>
