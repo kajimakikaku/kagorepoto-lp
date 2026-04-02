@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カーゴレポート</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .card {
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .logo { font-size: 22px; font-weight: bold; color: #0071BC; margin-bottom: 8px; }
+    .subtitle { font-size: 13px; color: #888; margin-bottom: 40px; }
+    .icon { font-size: 64px; margin-bottom: 24px; }
+    h1 { font-size: 20px; font-weight: bold; margin-bottom: 12px; color: #1a1a1a; }
+    p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 32px; }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #0071BC;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { color: #d32f2f; }
+    .btn {
+      display: inline-block;
+      background: #0071BC;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">カーゴレポート</div>
+    <div class="subtitle">軽貨物ドライバーの日報記録</div>
+    <div id="content">
+      <div class="spinner"></div>
+      <p>処理中...</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import {
+      getAuth,
+      applyActionCode,
+      checkActionCode
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+    const app = initializeApp({
+      apiKey: 'AIzaSyA9ZrEeu8xoA_Ps1sruB9NJD89EVJCGUk0',
+      authDomain: 'kagorepoto-app-97f74.firebaseapp.com',
+      projectId: 'kagorepoto-app-97f74',
+    });
+    const auth = getAuth(app);
+
+    function show(icon, title, message, showButton) {
+      document.getElementById('content').innerHTML = `
+        <div class="icon">${icon}</div>
+        <h1>${title}</h1>
+        <p>${message}</p>
+        ${showButton ? '<a class="btn" href="https://cargo-report.com">トップページへ</a>' : ''}
+      `;
+    }
+
+    function showError(message) {
+      document.getElementById('content').innerHTML = `
+        <div class="icon">❌</div>
+        <h1 class="error">エラーが発生しました</h1>
+        <p class="error">${message}</p>
+        <a class="btn" href="https://cargo-report.com">トップページへ</a>
+      `;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    const oobCode = params.get('oobCode');
+
+    if (!oobCode) {
+      showError('無効なリンクです。再度メールをご確認ください。');
+    } else if (mode === 'verifyEmail') {
+      applyActionCode(auth, oobCode)
+        .then(() => {
+          show('✅', 'メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。', false);
+        })
+        .catch(() => {
+          showError('このリンクは無効か、すでに使用済みです。\n再度アプリから認証メールを送信してください。');
+        });
+    } else if (mode === 'verifyAndChangeEmail') {
+      applyActionCode(auth, oobCode)
+        .then(() => {
+          show('✅', 'メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。', false);
+        })
+        .catch(() => {
+          showError('このリンクは無効か、すでに使用済みです。\n再度アプリからメールアドレス変更を行ってください。');
+        });
+    } else if (mode === 'resetPassword') {
+      show('🔑', 'パスワードのリセット', 'このリンクはアプリ内でのみ処理できます。\nアプリを開いてパスワードをリセットしてください。', false);
+    } else {
+      showError('不明な操作です。');
+    }
+  </script>
+</body>
+</html>
