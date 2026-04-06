@@ -4,271 +4,531 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>カーゴレポート｜軽貨物ドライバー向け日報・点呼記録アプリ</title>
-  <meta name="description" content="軽貨物・黒ナンバードライバーの日報、点呼記録、運行記録をスマホ一台で完結。2025年4月施行の法改正に対応。初回1か月無料トライアルあり。月額380円。カジマ企画合同会社。">
-  <meta name="keywords" content="日報,運行記録,日報記録,軽貨物,黒ナンバー,軽貨物ドライバー,個人事業主,業務記録,点呼,業務委託,ドライバー,無料,カーゴレポート,カジマ企画合同会社">
+  <meta name="description" content="軽貨物・黒ナンバードライバーの日報、点呼記録、運行記録をスマホ一台で完結。業務前後の点呼・業務記録・PDF出力・クラウド同期対応。月額380円。カジマ企画合同会社。">
+  <meta name="keywords" content="日報,運行記録,軽貨物,黒ナンバー,軽貨物ドライバー,個人事業主,業務記録,点呼,業務委託,ドライバー,カーゴレポート,カジマ企画合同会社">
   <meta name="author" content="カジマ企画合同会社">
   <meta property="og:title" content="カーゴレポート｜軽貨物ドライバー向け日報・点呼記録アプリ">
-  <meta property="og:description" content="軽貨物・黒ナンバードライバーの日報、点呼記録、運行記録をスマホ一台で完結。2025年4月施行の法改正に対応。月額380円。">
-  <meta property="og:image" content="images/icon.png">
+  <meta property="og:description" content="軽貨物・黒ナンバードライバーの日報、点呼記録、運行記録をスマホ一台で完結。月額380円。">
+  <meta property="og:image" content="images/icon.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="カーゴレポート｜軽貨物ドライバー向け日報・点呼記録アプリ">
   <meta name="twitter:description" content="軽貨物・黒ナンバードライバーの日報、点呼記録、運行記録をスマホ一台で完結。月額380円。">
-  <meta name="twitter:image" content="images/icon.png">
-  <link rel="icon" href="images/icon.png" type="image/jpeg">
-  <link rel="apple-touch-icon" href="images/icon.png">
+  <meta name="twitter:image" content="images/icon.jpg">
+  <link rel="icon" href="images/icon.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="images/icon.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --dark: #0A1628;
-      --dark2: #0F1F3D;
-      --blue: #0071BC;
-      --blue-light: #38A3E8;
-      --white: #ffffff;
-      --gray: #8A94A6;
-      --bg: #F4F7FC;
+      --dark:       #08111F;
+      --dark2:      #0D1B32;
+      --blue:       #0071BC;
+      --blue-mid:   #1A8FD8;
+      --blue-light: #4BB3F0;
+      --blue-pale:  #E8F4FD;
+      --white:      #FFFFFF;
+      --gray-text:  #6B7685;
+      --gray-light: #F2F5F9;
+      --border:     rgba(0,113,188,0.15);
+      --radius:     20px;
     }
+    html { scroll-behavior: smooth; }
     body {
       font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
-      color: #1a1a2e;
+      color: #1a2232;
       line-height: 1.7;
       background: #fff;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER ===== */
-    header {
-      background: rgba(10, 22, 40, 0.95);
-      backdrop-filter: blur(12px);
-      padding: 14px 24px;
+    /* ─── NAV ─── */
+    nav {
+      background: rgba(8,17,31,0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      text-decoration: none;
     }
-    header img { width: 32px; height: 32px; border-radius: 8px; }
-    header .app-name {
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+    }
+    .nav-brand span {
       font-family: "Inter", sans-serif;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: #fff;
       letter-spacing: 0.02em;
     }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      background: var(--blue) !important;
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--blue-mid) !important; }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
 
-    /* ===== HERO ===== */
+    /* ─── HERO ─── */
     .hero {
       background: var(--dark);
-      background-image: radial-gradient(ellipse at 70% 30%, rgba(0, 113, 188, 0.35) 0%, transparent 60%),
-                        radial-gradient(ellipse at 20% 80%, rgba(56, 163, 232, 0.15) 0%, transparent 50%);
+      background-image:
+        radial-gradient(ellipse at 75% 20%, rgba(0,113,188,0.4) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(75,179,240,0.12) 0%, transparent 45%);
       color: #fff;
-      padding: 56px 24px 64px;
+      padding: 72px 24px 80px;
       text-align: center;
       overflow: hidden;
     }
-    .hero-badge {
-      display: inline-block;
-      background: var(--blue);
-      color: #fff;
-      font-size: 13px;
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,113,188,0.2);
+      border: 1px solid rgba(0,113,188,0.4);
+      color: var(--blue-light);
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       padding: 6px 18px;
       border-radius: 100px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
     }
     .hero h1 {
-      font-family: "Noto Sans JP", sans-serif;
-      font-size: clamp(24px, 6vw, 36px);
+      font-size: clamp(28px, 7vw, 52px);
       font-weight: 900;
-      line-height: 1.4;
-      margin-bottom: 16px;
-      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
     }
     .hero h1 em {
       font-style: normal;
-      background: linear-gradient(90deg, #38A3E8, #82cfff);
+      background: linear-gradient(100deg, #4BB3F0 0%, #a8d8f5 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .hero-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 40px;
-      line-height: 1.8;
+    .hero-lead {
+      font-size: clamp(14px, 3vw, 17px);
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 48px;
+      line-height: 1.9;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-lead strong {
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
     }
 
-    /* ===== IMAGE SLIDER ===== */
-    .slider-wrap {
-      position: relative;
-      margin-bottom: 40px;
-    }
+    /* Slider */
+    .slider-wrap { margin-bottom: 52px; }
     .slider {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      padding: 8px 0 16px;
+      padding: 12px 0 20px;
       justify-content: center;
     }
     .slider::-webkit-scrollbar { display: none; }
     .slider img {
-      width: 140px;
+      width: 150px;
       flex-shrink: 0;
       scroll-snap-align: center;
-      border-radius: 20px;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      border-radius: 22px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
       border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s;
     }
+    .slider img:hover { transform: translateY(-4px); }
     @media (max-width: 600px) {
-      .slider {
-        justify-content: flex-start;
-        padding: 8px 24px 16px;
-      }
+      .slider { justify-content: flex-start; padding: 12px 24px 20px; }
     }
 
-    .hero-cta {
-      display: inline-block;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.6);
-      border: 1.5px solid rgba(255,255,255,0.25);
+    /* Hero store buttons */
+    .hero-store-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .hero-store-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 220px;
+      padding: 13px 24px;
+      border-radius: 14px;
       font-size: 14px;
       font-weight: 700;
-      padding: 14px 36px;
-      border-radius: 100px;
-      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .hero-store-btn.apple {
+      background: #fff;
+      color: #000;
+    }
+    .hero-store-btn.apple:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+    .hero-store-btn.google {
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .hero-store-btn.google:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateY(-2px);
+    }
+    .hero-store-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    @media (min-width: 400px) {
+      .hero-store-btns { flex-direction: row; }
     }
 
-    /* ===== SECTION BASE ===== */
-    section { padding: 72px 24px; }
+    /* ─── SECTION BASE ─── */
+    section { padding: 80px 24px; }
+    .container { max-width: 960px; margin: 0 auto; }
     .section-label {
       font-family: "Inter", sans-serif;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.18em;
       color: var(--blue);
       text-transform: uppercase;
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .section-title {
-      font-size: clamp(22px, 5vw, 30px);
+      font-size: clamp(24px, 5vw, 34px);
       font-weight: 900;
       color: var(--dark);
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 12px;
       line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    .section-sub {
+      font-size: 14px;
+      color: var(--gray-text);
+      text-align: center;
+      margin-bottom: 52px;
+      line-height: 1.8;
     }
 
-    /* ===== FEATURES ===== */
-    .features { background: var(--bg); }
-    .feature-list { display: flex; flex-direction: column; gap: 28px; max-width: 480px; margin: 0 auto; }
-    .feature-item { display: flex; align-items: flex-start; gap: 20px; }
-    .feature-num {
-      font-family: "Inter", sans-serif;
-      font-size: 13px;
-      font-weight: 900;
-      color: var(--blue);
-      letter-spacing: 0.05em;
-      min-width: 28px;
-      padding-top: 2px;
+    /* ─── PAIN POINTS ─── */
+    .pain { background: var(--gray-light); }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 700px;
+      margin: 0 auto 52px;
     }
-    .feature-body {}
+    .pain-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border-left: 3px solid #e5e8ee;
+    }
+    .pain-icon {
+      font-size: 22px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pain-item p {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+    }
+    .pain-arrow {
+      text-align: center;
+      font-size: 28px;
+      color: var(--blue);
+      margin-bottom: 28px;
+    }
+    .pain-solution {
+      background: var(--blue);
+      color: #fff;
+      border-radius: 16px;
+      padding: 24px 28px;
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .pain-solution p {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+    @media (min-width: 600px) {
+      .pain-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── FEATURES ─── */
+    .features { background: #fff; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--gray-light);
+      border-radius: var(--radius);
+      padding: 28px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      border-color: var(--border);
+      box-shadow: 0 4px 20px rgba(0,113,188,0.08);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--blue);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+      color: #fff;
+    }
     .feature-body h3 {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       color: var(--dark);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       line-height: 1.3;
     }
     .feature-body p {
       font-size: 13px;
-      color: var(--gray);
-      line-height: 1.7;
+      color: var(--gray-text);
+      line-height: 1.8;
+    }
+    @media (min-width: 600px) {
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .feature-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
 
-    /* ===== PRICING ===== */
-    .pricing { background: #E8F4FD; }
-    .pricing .section-label { color: var(--blue); }
+    /* ─── HOW IT WORKS ─── */
+    .flow { background: var(--dark); }
+    .flow .section-label { color: var(--blue-light); }
+    .flow .section-title { color: #fff; }
+    .flow .section-sub { color: rgba(255,255,255,0.5); }
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 21px;
+      top: 52px;
+      width: 2px;
+      height: calc(100% - 20px);
+      background: rgba(0,113,188,0.4);
+    }
+    .step-num {
+      width: 44px;
+      height: 44px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Inter", sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .step-body {
+      padding: 10px 0 40px;
+    }
+    .step-body h3 {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .step-body p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+    }
+
+    /* ─── PRICING ─── */
+    .pricing { background: var(--blue-pale); }
     .pricing .section-title { color: var(--dark); }
     .price-card {
       background: #fff;
-      border: 1.5px solid rgba(0,113,188,0.2);
-      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      border-radius: 28px;
       overflow: hidden;
-      max-width: 360px;
+      max-width: 380px;
       margin: 0 auto;
-      box-shadow: 0 8px 32px rgba(0,113,188,0.12);
+      box-shadow: 0 16px 48px rgba(0,113,188,0.14);
     }
     .price-card-top {
-      background: var(--blue);
-      padding: 20px 24px 16px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+      padding: 28px 28px 22px;
       text-align: center;
     }
     .price-plan-name {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.65);
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
     .price-amount {
       font-family: "Inter", sans-serif;
-      font-size: 56px;
+      font-size: 64px;
       font-weight: 900;
       color: #fff;
       line-height: 1;
+      letter-spacing: -0.02em;
     }
-    .price-amount sup { font-size: 22px; vertical-align: super; }
-    .price-amount sub { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.7); }
-    .price-card-body { padding: 28px 24px; }
+    .price-amount sup { font-size: 24px; vertical-align: super; }
+    .price-amount sub { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.6); }
+    .price-card-body { padding: 28px 28px 32px; }
+    .price-trial-badge {
+      background: rgba(0,113,188,0.08);
+      border: 1px solid var(--border);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
     .price-features { list-style: none; }
     .price-features li {
       font-size: 14px;
-      color: #444;
-      padding: 10px 0;
-      border-bottom: 1px solid #eef3f8;
+      color: #333;
+      padding: 11px 0;
+      border-bottom: 1px solid #f0f4f8;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .price-features li:last-child { border-bottom: none; }
-    .price-features li::before {
-      content: "";
-      display: block;
-      width: 18px;
-      height: 18px;
+    .price-check {
+      width: 20px;
+      height: 20px;
       background: var(--blue);
       border-radius: 50%;
       flex-shrink: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
-      background-size: 12px;
-      background-repeat: no-repeat;
-      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .price-check svg {
+      width: 11px;
+      height: 11px;
+      color: #fff;
+    }
+    .price-note {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--gray-text);
+      line-height: 1.8;
     }
 
-    /* ===== FAQ ===== */
-    .faq { background: var(--bg); }
-    .faq-list { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    /* ─── FAQ ─── */
+    .faq { background: var(--gray-light); }
+    .faq-list {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
     details {
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #edf0f5;
     }
     summary {
       font-size: 14px;
       font-weight: 700;
       color: var(--dark);
-      padding: 18px 20px;
+      padding: 20px 22px;
       cursor: pointer;
       list-style: none;
       display: flex;
@@ -279,26 +539,28 @@
     summary::-webkit-details-marker { display: none; }
     summary::after {
       content: "+";
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 300;
       color: var(--blue);
       flex-shrink: 0;
       transition: transform 0.2s;
+      line-height: 1;
     }
-    details[open] summary::after {
-      transform: rotate(45deg);
-    }
+    details[open] summary::after { transform: rotate(45deg); }
     .faq-answer {
-      padding: 0 20px 18px;
+      padding: 0 22px 20px;
       font-size: 13px;
       color: #555;
-      line-height: 1.8;
+      line-height: 1.9;
+      border-top: 1px solid #f0f4f8;
+      margin-top: -1px;
+      padding-top: 16px;
     }
     .faq-contact {
       text-align: center;
-      margin-top: 32px;
+      margin-top: 36px;
       font-size: 13px;
-      color: var(--gray);
+      color: var(--gray-text);
     }
     .faq-contact a {
       color: var(--blue);
@@ -306,218 +568,425 @@
       font-weight: 700;
     }
 
-    /* ===== DOWNLOAD ===== */
+    /* ─── DOWNLOAD CTA ─── */
     .download {
       background: var(--dark);
-      background-image: radial-gradient(ellipse at 50% 0%, rgba(0, 113, 188, 0.4) 0%, transparent 60%);
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(0,113,188,0.5) 0%, transparent 55%);
       text-align: center;
-      padding: 72px 24px;
+      padding: 88px 24px;
     }
     .download .section-label { color: var(--blue-light); }
     .download .section-title { color: #fff; }
-    .download-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 40px;
+    .download .section-sub { color: rgba(255,255,255,0.5); margin-bottom: 44px; }
+    .dl-store-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
     }
-    .store-buttons { display: flex; flex-direction: column; gap: 14px; align-items: center; }
-    .store-btn {
+    .dl-store-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.5);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      font-size: 14px;
+      width: 230px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 15px;
       font-weight: 700;
-      padding: 14px 32px;
-      border-radius: 100px;
-      width: 240px;
+      text-decoration: none;
+      transition: all 0.2s;
       letter-spacing: 0.02em;
     }
+    .dl-store-btn.apple {
+      background: #fff;
+      color: #000;
+    }
+    .dl-store-btn.apple:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+    .dl-store-btn.google {
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .dl-store-btn.google:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateY(-2px);
+    }
+    .dl-store-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+    @media (min-width: 440px) {
+      .dl-store-btns { flex-direction: row; justify-content: center; }
+    }
 
-    /* ===== FOOTER ===== */
+    /* ─── FOOTER ─── */
     footer {
-      background: #060e1e;
-      color: rgba(255,255,255,0.4);
+      background: #04090f;
+      color: rgba(255,255,255,0.35);
       text-align: center;
-      padding: 36px 24px;
+      padding: 44px 24px;
       font-size: 12px;
     }
-    .footer-links { margin-bottom: 14px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
-    footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
-    footer a:hover { color: rgba(255,255,255,0.7); }
-    .footer-company { margin-bottom: 6px; color: rgba(255,255,255,0.55); }
-    .footer-email { margin-bottom: 10px; font-size: 11px; }
+    .footer-links {
+      margin-bottom: 18px;
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    footer a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: rgba(255,255,255,0.65); }
+    .footer-company {
+      margin-bottom: 6px;
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+    }
+    .footer-email { margin-bottom: 14px; font-size: 11px; }
     .copyright { font-size: 11px; }
 
-    /* ===== RESPONSIVE ===== */
+    /* ─── RESPONSIVE ─── */
     @media (min-width: 768px) {
-      .hero { padding: 80px 48px 80px; }
-      .hero h1 { font-size: 44px; }
-      .hero-sub { font-size: 16px; }
-      section { padding: 96px 48px; }
-      .feature-list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 32px 48px;
-        max-width: 800px;
-      }
-      .price-card { max-width: 400px; }
-      .store-buttons { flex-direction: row; justify-content: center; }
+      .hero { padding: 96px 48px 96px; }
+      section { padding: 100px 48px; }
     }
     @media (min-width: 1024px) {
-      header { padding: 16px 64px; }
-      .hero { padding: 100px 64px; }
-      .hero h1 { font-size: 52px; }
-      section { padding: 112px 64px; }
-      .feature-list { max-width: 900px; gap: 36px 64px; }
-      .faq-list { max-width: 680px; }
+      nav { padding: 0 80px; }
+      .hero { padding: 112px 80px 112px; }
+      section { padding: 120px 80px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="images/icon.png" alt="カーゴレポート">
-    <span class="app-name">カーゴレポート</span>
-  </header>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="images/icon.jpg" alt="カーゴレポート">
+      <span>カーゴレポート</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">機能</a></li>
+      <li><a href="#pricing">料金</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#download" class="nav-cta">ダウンロード</a></li>
+    </ul>
+  </nav>
 
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-badge">軽貨物ドライバー向け</div>
+    <div class="hero-eyebrow">軽貨物・黒ナンバードライバー向け</div>
     <h1>日報管理を、<br><em>もっとシンプルに。</em></h1>
-    <p class="hero-sub">
-      点呼・業務記録・事故記録をスマホ一台で完結。<br>
-      法令に準拠したデータ管理を、誰でも簡単に。
+    <p class="hero-lead">
+      業務前後の点呼・業務記録・事故記録を<strong>スマホ一台で完結</strong>。<br>
+      記録したデータはPDF出力し、そのまま提出書類として活用できます。
     </p>
+
     <div class="slider-wrap">
       <div class="slider">
-        <img src="images/IMG_1.png" alt="カーゴレポート 業務前の点呼記録画面">
-        <img src="images/IMG_2.png" alt="カーゴレポート 業務の記録画面">
-        <img src="images/IMG_3.png" alt="カーゴレポート 業務後の点呼記録画面">
-        <img src="images/IMG_4.png" alt="カーゴレポート カレンダー・PDF出力画面">
-        <img src="images/IMG_5.png" alt="カーゴレポート 月額プラン画面">
+        <img src="images/IMG_1.png" alt="業務前の点呼記録画面">
+        <img src="images/IMG_2.png" alt="業務の記録画面">
+        <img src="images/IMG_3.png" alt="業務後の点呼記録画面">
+        <img src="images/IMG_4.png" alt="カレンダー・PDF出力画面">
+        <img src="images/IMG_5.png" alt="月額プラン画面">
       </div>
     </div>
-    <div class="hero-cta">App Store・Google Play 近日公開</div>
+
+    <div class="hero-store-btns">
+      <a href="https://apps.apple.com/jp/app/id6749254088" class="hero-store-btn apple">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.kajimakikaku.kagorepoto" class="hero-store-btn google">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.98.07l12.09-6.98-2.71-2.72-10.36 9.63zm-1.63-20.4A1.5 1.5 0 001.5 4.5v15a1.5 1.5 0 00.05.36l10.6-9.86-10.6-6.64zm20.11 8.09l-3.05-1.76-2.97 2.76 2.97 2.95 3.08-1.78a1.5 1.5 0 000-2.17zM4.16.24c-.33-.13-.69-.1-.98.07L13.64 6.9 10.93 9.62 4.16.24z"/></svg>
+        Google Play
+      </a>
+    </div>
   </section>
 
-  <section class="features">
-    <p class="section-label">Features</p>
-    <h2 class="section-title">主な機能</h2>
-    <div class="feature-list">
-      <div class="feature-item">
-        <span class="feature-num">01</span>
-        <div class="feature-body">
-          <h3>業務前・後の点呼</h3>
-          <p>アルコール検知・健康状態など法定項目を漏れなく記録。チェック漏れを防ぎます。</p>
+  <!-- PAIN POINTS -->
+  <section class="pain">
+    <div class="container">
+      <p class="section-label">Problem</p>
+      <h2 class="section-title">こんなお悩みはありませんか？</h2>
+      <div class="pain-grid">
+        <div class="pain-item">
+          <span class="pain-icon">📋</span>
+          <p>紙の日報に毎日手書きするのが面倒</p>
+        </div>
+        <div class="pain-item">
+          <span class="pain-icon">🔍</span>
+          <p>過去の記録が見つからない</p>
+        </div>
+        <div class="pain-item">
+          <span class="pain-icon">📁</span>
+          <p>点呼記録の管理が煩雑になっている</p>
+        </div>
+        <div class="pain-item">
+          <span class="pain-icon">😰</span>
+          <p>記録の漏れが不安で毎日確認に時間がかかる</p>
         </div>
       </div>
-      <div class="feature-item">
-        <span class="feature-num">02</span>
-        <div class="feature-body">
-          <h3>業務の記録</h3>
-          <p>走行距離・経由地・荷役作業など、詳細な業務内容をそのまま保存。</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-num">03</span>
-        <div class="feature-body">
-          <h3>事故の記録</h3>
-          <p>発生日時・場所・原因・再発防止策まで、一画面でまとめて管理。</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-num">04</span>
-        <div class="feature-body">
-          <h3>クラウド自動バックアップ</h3>
-          <p>データは暗号化のうえ自動保存。機種変更後もすぐ復元できます。</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-num">05</span>
-        <div class="feature-body">
-          <h3>PDF出力・共有</h3>
-          <p>記録をPDF化してメールやAirDropで共有。そのまま提出書類として活用できます。</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-num">06</span>
-        <div class="feature-body">
-          <h3>カレンダー管理</h3>
-          <p>月別カレンダーで記録状況を一覧表示。記録の抜けをひと目で確認。</p>
-        </div>
+      <div class="pain-arrow">↓</div>
+      <div class="pain-solution">
+        <p>カーゴレポートなら、<br>スマホだけで点呼・業務記録をすべて管理。<br>PDFで提出書類もすぐ作れます。</p>
       </div>
     </div>
   </section>
 
-  <section class="pricing">
-    <p class="section-label">Pricing</p>
-    <h2 class="section-title">シンプルな料金体系</h2>
-    <div class="price-card">
-      <div class="price-card-top">
-        <p class="price-plan-name">Monthly Plan</p>
-        <div class="price-amount"><sup>¥</sup>380<sub> / 月（税込）</sub></div>
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="container">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">主な機能</h2>
+      <p class="section-sub">日々の業務に必要な記録をすべてカバー</p>
+      <div class="feature-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>業務前の点呼</h3>
+            <p>点呼方法・確認者・アルコール検知・健康状態・指示事項を法定項目に沿って記録。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>業務後の点呼</h3>
+            <p>帰着後の点呼内容を記録。業務前点呼と合わせて1日の記録を一元管理。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>業務記録（日報）</h3>
+            <p>開始・終了地点、走行距離、主な経過地点（到着・出発時刻）、待機・荷役記録まで詳細に管理。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>ヒヤリハット・事故記録</h3>
+            <p>発生概要・原因・備考を一画面で記録。安全運転の振り返りと再発防止に。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>月次カレンダー管理</h3>
+            <p>月単位で記録状況を一覧表示。入力済みの日をひと目で確認でき、漏れを防げます。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>PDF出力・共有</h3>
+            <p>記録をPDF化してメールやAirDropで共有。そのまま提出書類として使えます。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>自動入力（定型入力）</h3>
+            <p>よく使う内容を登録しておき、ワンタップで各記録ページに反映。毎日の入力を大幅に短縮。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>クラウド自動バックアップ</h3>
+            <p>データはクラウドに自動同期。機種変更後も同じアカウントでログインするだけで即復元。</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="feature-body">
+            <h3>顔認証ログイン</h3>
+            <p>Face ID / Touch ID で素早くログイン。毎回パスワードを入力する手間がありません。</p>
+          </div>
+        </div>
+
       </div>
-      <div class="price-card-body">
-        <p style="font-size:13px; color:#0071BC; font-weight:700; text-align:center; margin-bottom:16px;">初回1か月無料トライアルあり</p>
-        <ul class="price-features">
-          <li>業務前・後の点呼を記録</li>
-          <li>業務の記録を保存</li>
-          <li>事故の記録を保存</li>
-          <li>クラウド自動バックアップ</li>
-          <li>機種変更後もデータ復元</li>
-          <li>PDF出力・共有</li>
-        </ul>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="flow">
+    <div class="container">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">1日の使い方</h2>
+      <p class="section-sub">出発前から帰着後まで、3ステップで完結</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>出発前に「業務前の点呼」を記録</h3>
+            <p>点呼方法・確認者・アルコール検知結果・健康状態・指示事項を入力。自動入力を使えば数秒で完了。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>業務中・帰着後に「業務記録」を入力</h3>
+            <p>走行距離・経過地点・待機・荷役情報を記録。必要に応じてヒヤリハット・事故の記録も追加できます。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>帰着後に「業務後の点呼」を記録</h3>
+            <p>帰着後の点呼内容を入力して1日の記録が完結。必要な日の記録をカレンダーからPDF出力できます。</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="faq">
-    <p class="section-label">FAQ</p>
-    <h2 class="section-title">よくある質問</h2>
-    <div class="faq-list">
-      <details>
-        <summary>どのOSに対応していますか？</summary>
-        <p class="faq-answer">iOS（iPhone）およびAndroid（スマートフォン・タブレット）に対応しています。</p>
-      </details>
-      <details>
-        <summary>PDFで共有するには？</summary>
-        <p class="faq-answer">カレンダー画面で日付を長押しすると、PDF出力するセクションを選択できます。出力したいセクションにチェックを入れて「出力する」をタップすると、メールやAirDropなどで送れます。</p>
-      </details>
-      <details>
-        <summary>機種変更してもデータは引き継げますか？</summary>
-        <p class="faq-answer">はい。クラウドバックアップにより、新しいスマートフォンに同じアカウントでログインするだけでデータを復元できます。</p>
-      </details>
-      <details>
-        <summary>位置情報やカメラにアクセスしますか？</summary>
-        <p class="faq-answer">いいえ。位置情報（GPS）とカメラ（写真データ）は一切取得・利用しません。</p>
-      </details>
-      <details>
-        <summary>解約はいつでもできますか？</summary>
-        <p class="faq-answer">はい。App StoreまたはGoogle Playのサブスクリプション設定からいつでも解約できます。解約後も期間終了まではご利用いただけます。</p>
-      </details>
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <p class="section-label">Pricing</p>
+      <h2 class="section-title">シンプルな料金体系</h2>
+      <div class="price-card">
+        <div class="price-card-top">
+          <p class="price-plan-name">Monthly Plan</p>
+          <div class="price-amount"><sup>¥</sup>380<sub> /月（税込）</sub></div>
+        </div>
+        <div class="price-card-body">
+          <div class="price-trial-badge">
+            招待コード入力で初回限定の無料トライアルあり
+          </div>
+          <ul class="price-features">
+            <li>
+              <span class="price-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+              業務前・後の点呼を記録
+            </li>
+            <li>
+              <span class="price-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+              業務記録（日報）を保存
+            </li>
+            <li>
+              <span class="price-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+              ヒヤリハット・事故の記録
+            </li>
+            <li>
+              <span class="price-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+              自動入力（定型入力）
+            </li>
+            <li>
+              <span class="price-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+              PDF出力・共有
+            </li>
+            <li>
+              <span class="price-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+              クラウド自動バックアップ・機種変更対応
+            </li>
+          </ul>
+          <p class="price-note">
+            解約はいつでも可能。<br>App Store / Google Play のサブスク設定から簡単に解約できます。
+          </p>
+        </div>
+      </div>
     </div>
-    <p class="faq-contact">
-      その他のご質問は kajimakikaku.contact@gmail.com へ
-    </p>
   </section>
 
-  <section class="download">
-    <p class="section-label">Download</p>
-    <h2 class="section-title">近日公開予定</h2>
-    <p class="download-sub">iOSおよびAndroid対応。<br>リリースをお待ちください。</p>
-    <div class="store-buttons">
-      <div class="store-btn">App Store 近日公開</div>
-      <div class="store-btn">Google Play 近日公開</div>
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">よくある質問</h2>
+      <div class="faq-list">
+        <details>
+          <summary>どのOSに対応していますか？</summary>
+          <p class="faq-answer">iOS（iPhone）およびAndroid（スマートフォン・タブレット）に対応しています。</p>
+        </details>
+        <details>
+          <summary>招待コードとは何ですか？</summary>
+          <p class="faq-answer">登録時に招待コードを入力すると、初回限定の無料トライアル期間を利用できます。招待コードがない方は <strong>CARGO1</strong> を入力することで1か月間の無料トライアルをご利用いただけます。</p>
+        </details>
+        <details>
+          <summary>PDFを出力する方法は？</summary>
+          <p class="faq-answer">カレンダー画面で日付を長押しするとPDF出力メニューが開きます。出力したいセクション（点呼・業務記録など）を選択して「出力する」をタップすると、メールやAirDropなどで共有できます。</p>
+        </details>
+        <details>
+          <summary>自動入力機能はどう使いますか？</summary>
+          <p class="faq-answer">設定画面の「自動入力の設定」から定型内容を登録しておきます。各記録ページの「自動入力」ボタンをタップすると、登録した内容がワンタップで反映されます。</p>
+        </details>
+        <details>
+          <summary>機種変更してもデータは引き継げますか？</summary>
+          <p class="faq-answer">はい。クラウドバックアップにより、新しいスマートフォンに同じアカウントでログインするだけでデータを復元できます。</p>
+        </details>
+        <details>
+          <summary>位置情報やカメラにアクセスしますか？</summary>
+          <p class="faq-answer">いいえ。位置情報（GPS）とカメラ・写真データは一切取得・利用しません。</p>
+        </details>
+        <details>
+          <summary>解約はいつでもできますか？</summary>
+          <p class="faq-answer">はい。App StoreまたはGoogle Playのサブスクリプション設定からいつでも解約できます。解約後も期間終了まではご利用いただけます。</p>
+        </details>
+      </div>
+      <p class="faq-contact">
+        その他のご質問はアプリ内のお問い合わせフォーム、<br>
+        またはメール <a href="mailto:kajimakikaku.contact@gmail.com">kajimakikaku.contact@gmail.com</a> へ
+      </p>
     </div>
   </section>
 
+  <!-- DOWNLOAD CTA -->
+  <section class="download" id="download">
+    <div class="container">
+      <p class="section-label">Download</p>
+      <h2 class="section-title">今すぐ無料で試す</h2>
+      <p class="section-sub">招待コード <strong style="color:#4BB3F0;">CARGO1</strong> で1か月間無料。<br>App Store・Google Play からダウンロードできます。</p>
+      <div class="dl-store-btns">
+        <a href="https://apps.apple.com/jp/app/id6749254088" class="dl-store-btn apple">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          App Store
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.kajimakikaku.kagorepoto" class="dl-store-btn google">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.98.07l12.09-6.98-2.71-2.72-10.36 9.63zm-1.63-20.4A1.5 1.5 0 001.5 4.5v15a1.5 1.5 0 00.05.36l10.6-9.86-10.6-6.64zm20.11 8.09l-3.05-1.76-2.97 2.76 2.97 2.95 3.08-1.78a1.5 1.5 0 000-2.17zM4.16.24c-.33-.13-.69-.1-.98.07L13.64 6.9 10.93 9.62 4.16.24z"/></svg>
+          Google Play
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-links">
       <a href="https://kajimakikaku.github.io/cargo-report-legal/terms.html">利用規約</a>
       <a href="https://kajimakikaku.github.io/cargo-report-legal/privacy.html">プライバシーポリシー</a>
+      <a href="delete-account.html">アカウント削除</a>
     </div>
     <div class="footer-company">運営：カジマ企画合同会社</div>
     <div class="footer-email"><a href="mailto:kajimakikaku.contact@gmail.com">kajimakikaku.contact@gmail.com</a></div>
