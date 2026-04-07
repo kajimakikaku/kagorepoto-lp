@@ -172,7 +172,7 @@
               await applyActionCode(auth, oobCode);
               showSuccess('メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。');
             } catch (e) {
-              showError('エラーコード: ' + (e.code || e.message || JSON.stringify(e)));
+              showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。');
             }
           });
         } else if (mode === 'verifyAndChangeEmail') {
