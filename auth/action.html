@@ -158,11 +158,41 @@
         if (!oobCode) {
           showError('無効なリンクです。再度メールをご確認ください。');
         } else if (mode === 'verifyEmail') {
-          await applyActionCode(auth, oobCode);
-          showSuccess('メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。');
+          // ボタン押下後に実行（メールスキャナによる自動消費を防ぐ）
+          document.getElementById('content').innerHTML = `
+            <h1>メールアドレスの確認</h1>
+            <p>下のボタンをタップしてメールアドレスを確認してください。</p>
+            <button class="btn" id="verify-btn">メールアドレスを確認する</button>
+          `;
+          document.getElementById('verify-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('verify-btn');
+            btn.disabled = true;
+            btn.textContent = '確認中...';
+            try {
+              await applyActionCode(auth, oobCode);
+              showSuccess('メールアドレスの確認が完了しました', 'アプリに戻ってログインしてください。');
+            } catch (e) {
+              showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。');
+            }
+          });
         } else if (mode === 'verifyAndChangeEmail') {
-          await applyActionCode(auth, oobCode);
-          showSuccess('メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。');
+          // ボタン押下後に実行（メールスキャナによる自動消費を防ぐ）
+          document.getElementById('content').innerHTML = `
+            <h1>メールアドレスの変更確認</h1>
+            <p>下のボタンをタップしてメールアドレスの変更を確定してください。</p>
+            <button class="btn" id="verify-btn">メールアドレスの変更を確定する</button>
+          `;
+          document.getElementById('verify-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('verify-btn');
+            btn.disabled = true;
+            btn.textContent = '確認中...';
+            try {
+              await applyActionCode(auth, oobCode);
+              showSuccess('メールアドレスの変更が完了しました', '新しいメールアドレスでログインしてください。');
+            } catch (e) {
+              showError('このリンクは無効か、すでに使用済みです。<br>再度アプリから操作してください。');
+            }
+          });
         } else if (mode === 'resetPassword') {
           showPasswordForm(auth, oobCode);
         } else {
