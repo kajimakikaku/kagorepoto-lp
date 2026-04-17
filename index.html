@@ -651,6 +651,83 @@
     .footer-email { margin-bottom: 14px; font-size: 11px; }
     .copyright { font-size: 11px; }
 
+    /* ─── LAW ─── */
+    .law {
+      background: linear-gradient(135deg, #0D1B32 0%, #0a1628 100%);
+      color: #fff;
+    }
+    .law .section-label { color: var(--blue-light); }
+    .law .section-title { color: #fff; }
+    .law .section-sub { color: rgba(255,255,255,0.5); margin-bottom: 40px; }
+    .law-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(75,179,240,0.25);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .law-box p {
+      color: rgba(255,255,255,0.85);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+    .law-box strong {
+      color: var(--blue-light);
+    }
+    .law-tag {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    /* ─── SCREENSHOTS ─── */
+    .screenshots {
+      background: var(--gray-light);
+    }
+    .screenshots .section-label { color: var(--blue); }
+    .screenshots .section-sub { color: var(--gray-text); margin-bottom: 40px; }
+    .screenshots-scroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screenshots-scroll::-webkit-scrollbar { display: none; }
+    .screenshot-item {
+      flex: 0 0 auto;
+      width: 180px;
+      text-align: center;
+    }
+    .screenshot-item img {
+      width: 180px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      display: block;
+    }
+    .screenshot-caption {
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a2232;
+    }
+    @media (min-width: 768px) {
+      .screenshots-scroll {
+        justify-content: center;
+        flex-wrap: wrap;
+        overflow-x: visible;
+      }
+      .screenshot-item { width: 200px; }
+      .screenshot-item img { width: 200px; }
+    }
+
     /* ─── RESPONSIVE ─── */
     @media (min-width: 768px) {
       .hero { padding: 96px 48px 96px; }
@@ -760,6 +837,22 @@
     </div>
   </section>
 
+  <!-- LAW -->
+  <section class="law">
+    <div class="container">
+      <p class="section-label">Compliance</p>
+      <h2 class="section-title">2025年施行の法改正に対応</h2>
+      <p class="section-sub">改正貨物自動車運送事業輸送安全規則への対応をサポート</p>
+      <div class="law-box">
+        <span class="law-tag">2025年施行</span>
+        <p>
+          2025年に施行された改正により、軽貨物ドライバーにも<strong>点呼記録・業務記録の保存義務</strong>が適用されます。<br><br>
+          カーゴレポートは、法令で定められた記録項目をすべてカバー。記録した内容はクラウドに自動保存され、必要なときにPDFで出力できます。<strong>紙の管理が不要</strong>になり、法令順守をスマホ1台で実現します。
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURES -->
   <section class="features" id="features">
     <div class="container">
@@ -858,6 +951,37 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section class="screenshots">
+    <div class="container">
+      <p class="section-label">Screenshots</p>
+      <h2 class="section-title">アプリ画面</h2>
+      <p class="section-sub">シンプルな画面設計で、はじめてでも迷わず使えます</p>
+      <div class="screenshots-scroll">
+        <div class="screenshot-item">
+          <img src="images/app1.png" alt="トップページ" loading="lazy">
+          <p class="screenshot-caption">トップページ</p>
+        </div>
+        <div class="screenshot-item">
+          <img src="images/app2.png" alt="業務前の点呼" loading="lazy">
+          <p class="screenshot-caption">業務前の点呼</p>
+        </div>
+        <div class="screenshot-item">
+          <img src="images/app3.png" alt="業務の記録" loading="lazy">
+          <p class="screenshot-caption">業務の記録</p>
+        </div>
+        <div class="screenshot-item">
+          <img src="images/app4.png" alt="業務後の点呼" loading="lazy">
+          <p class="screenshot-caption">業務後の点呼</p>
+        </div>
+        <div class="screenshot-item">
+          <img src="images/app5.png" alt="事故" loading="lazy">
+          <p class="screenshot-caption">事故</p>
+        </div>
       </div>
     </div>
   </section>
