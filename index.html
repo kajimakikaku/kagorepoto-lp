@@ -116,11 +116,11 @@
 
     /* ─── HERO ─── */
     .hero {
-      background: var(--dark);
+      background-color: var(--blue-pale);
       background-image:
-        radial-gradient(ellipse at 75% 20%, rgba(0,113,188,0.4) 0%, transparent 55%),
-        radial-gradient(ellipse at 15% 85%, rgba(75,179,240,0.12) 0%, transparent 45%);
-      color: #fff;
+        radial-gradient(ellipse at 75% 20%, rgba(0,113,188,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(75,179,240,0.14) 0%, transparent 45%);
+      color: var(--dark);
       padding: 72px 24px 80px;
       text-align: center;
       overflow: hidden;
@@ -129,9 +129,9 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0,113,188,0.2);
-      border: 1px solid rgba(0,113,188,0.4);
-      color: var(--blue-light);
+      background: rgba(0,113,188,0.10);
+      border: 1px solid rgba(0,113,188,0.35);
+      color: var(--blue);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.1em;
@@ -149,14 +149,14 @@
     }
     .hero h1 em {
       font-style: normal;
-      background: linear-gradient(100deg, #4BB3F0 0%, #a8d8f5 100%);
+      background: linear-gradient(100deg, var(--blue) 0%, var(--blue-mid) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .hero-lead {
       font-size: clamp(14px, 3vw, 17px);
-      color: rgba(255,255,255,0.65);
+      color: var(--gray-text);
       margin-bottom: 48px;
       line-height: 1.9;
       max-width: 520px;
@@ -164,7 +164,7 @@
       margin-right: auto;
     }
     .hero-lead strong {
-      color: rgba(255,255,255,0.9);
+      color: var(--dark);
       font-weight: 700;
     }
 
@@ -186,8 +186,8 @@
       flex-shrink: 0;
       scroll-snap-align: center;
       border-radius: 22px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
-      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 48px rgba(8,17,31,0.18);
+      border: 1px solid rgba(0,0,0,0.06);
       transition: transform 0.3s;
     }
     .slider img:hover { transform: translateY(-4px); }
@@ -217,20 +217,21 @@
       letter-spacing: 0.02em;
     }
     .hero-store-btn.apple {
-      background: #fff;
-      color: #000;
+      background: #000;
+      color: #fff;
     }
     .hero-store-btn.apple:hover {
-      background: #f0f0f0;
+      background: #1a1a1a;
       transform: translateY(-2px);
     }
     .hero-store-btn.google {
-      background: rgba(255,255,255,0.1);
-      border: 1.5px solid rgba(255,255,255,0.2);
+      background: var(--blue);
+      border: 1.5px solid var(--blue);
       color: #fff;
     }
     .hero-store-btn.google:hover {
-      background: rgba(255,255,255,0.18);
+      background: var(--blue-mid);
+      border-color: var(--blue-mid);
       transform: translateY(-2px);
     }
     .hero-store-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
